@@ -16,7 +16,8 @@ Query and run reports on your Google Analytics 4 properties using an intuative a
 
 ```
 npm install ga-bridge
----
+```
+```
 yarn install ga-bridge
 ```
 
