@@ -1,0 +1,23 @@
+{
+  "name": "ga-bridge",
+  "version": "1.0.0",
+  "description": "A easy-to-use bridge between your GA properties and your code.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/samp-reston/ga-bridge.git"
+  },
+  "keywords": [
+    "google analytics",
+    "ga4"
+  ],
+  "author": "Samuel Preston",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/samp-reston/ga-bridge/issues"
+  },
+  "homepage": "https://github.com/samp-reston/ga-bridge#readme"
+}
