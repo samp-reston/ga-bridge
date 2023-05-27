@@ -5,6 +5,9 @@ This library offers a simple and type safe way to query these APIs using TypeScr
 
 This library uses the native fetch API to reduce the size of the package and in an attempt to make it as compatible across browsers as possible.
 
+## Use
+List of available classes as part of this specific part of the library.
+
 ## About GA4 API
 > The Google Analytics Data API v1 gives you programmatic access to Google Analytics 4 (GA4) report data.
 >
