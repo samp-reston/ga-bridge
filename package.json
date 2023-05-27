@@ -4,7 +4,11 @@
   "description": "A easy-to-use bridge between your GA properties and your code.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "run": "node dist/src/index.js",
+    "build:watch": "tsc --watch",
+    "run:watch": "node dist/src/index.js --watch dist",
+    "start": "npm-run-all --parallel build:watch run:watch"
   },
   "repository": {
     "type": "git",
@@ -19,5 +23,14 @@
   "bugs": {
     "url": "https://github.com/samp-reston/ga-bridge/issues"
   },
-  "homepage": "https://github.com/samp-reston/ga-bridge#readme"
+  "homepage": "https://github.com/samp-reston/ga-bridge#readme",
+  "devDependencies": {
+    "@types/source-map-support": "^0.5.6",
+    "nodemon": "^2.0.22",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "source-map-support": "^0.5.21"
+  }
 }
