@@ -8,7 +8,7 @@ type RunReportBody = {
   limit?: number;
   metricAggregations?: MetricAggregation[];
   orderBys?: OrderBy[];
-  currencyCode?: string;
+  currencyCode?: CurrencyCode;
   cohortSpec?: CohortSpec;
   keepEmptyRows?: boolean;
   returnPropertyQuota?: boolean;
@@ -34,9 +34,29 @@ type NotExpression<T extends "metric" | "dimension"> =
 
 type DateRange = { startDate: string; endDate: string; name?: string };
 
-type MetricBody = { name: GA4.Metric["apiName"] };
+type MetricBody = {
+  name: GA4.Metric["apiName"];
+  expression?: string;
+  invisible?: boolean;
+};
 
-type DimensionBody = { name: GA4.Dimension["apiName"] };
+type DimensionBody = {
+  name: GA4.Dimension["apiName"];
+  dimensionExpression?: DimensionExpression;
+};
+
+type DimensionExpression = {
+  lowerCase?: {
+    dimensionName: GA4.Dimension["apiName"];
+  };
+  upperCase?: {
+    dimensionName: GA4.Dimension["apiName"];
+  };
+  concatenate?: {
+    dimensionNames: GA4.Dimension["apiName"][];
+    delimiter?: string;
+  };
+};
 
 type Filter<T extends "metric" | "dimension"> = {
   betweenFilter?: BetweenFilter;
@@ -154,3 +174,54 @@ type Granularity = "DAILY" | "WEEKLY" | "MONTHLY";
 type CohortReportSettings = {
   accumulate: boolean;
 };
+
+type CurrencyCode =
+  | "USD"
+  | "AED"
+  | "ARS"
+  | "AUD"
+  | "BGN"
+  | "BOB"
+  | "BRL"
+  | "CAD"
+  | "CHF"
+  | "CLP"
+  | "CNY"
+  | "COP"
+  | "CZK"
+  | "DKK"
+  | "EGP"
+  | "EUR"
+  | "FRF"
+  | "GBP"
+  | "HKD"
+  | "HRK"
+  | "HUF"
+  | "IDR"
+  | "ILS"
+  | "INR"
+  | "JPY"
+  | "KRW"
+  | "LTL"
+  | "MAD"
+  | "MXN"
+  | "MYR"
+  | "NOK"
+  | "NZD"
+  | "PEN"
+  | "PHP"
+  | "PKR"
+  | "PLN"
+  | "RON"
+  | "RSD"
+  | "RUB"
+  | "SAR"
+  | "SEK"
+  | "SGD"
+  | "THB"
+  | "TRY"
+  | "TWD"
+  | "UAH"
+  | "VEF"
+  | "VND"
+  | "ZAR";
