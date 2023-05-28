@@ -11,9 +11,10 @@ async function runReport(
   propertyId: string,
   { options }: { options: ReportOptions }
 ) {
-  const reportUrl = generateReportUrl(propertyId);
-  fetch(reportUrl, {
+  const [url, body] = generateReportQuery(propertyId, options);
+
+  fetch(url, {
     method: "POST",
-    body: JSON.stringify(options),
+    body: JSON.stringify(body),
   });
 }

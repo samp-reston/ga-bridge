@@ -5,3 +5,10 @@ function generateReportUrl(
 ): `${typeof ANALYTICS_DATA_ENPOINT}/properties/${string}:runReport` {
   return `${ANALYTICS_DATA_ENPOINT}/properties/${propertyId}:runReport`;
 }
+
+function generateReportQuery(
+  propertyId,
+  options
+): [ReturnType<typeof generateReportUrl>, reportBody] {
+  return [generateReportUrl(propertyId), "hi"];
+}
