@@ -10,5 +10,8 @@ function generateReportQuery(
   propertyId,
   options
 ): [ReturnType<typeof generateReportUrl>, RunReportBody] {
+  const { dateRanges, metrics, dimensions } = options;
+  
+
   return [generateReportUrl(propertyId), "hi"];
 }

@@ -1,9 +1,5 @@
 type ReportOptions = {
-  dateRanges: {
-    startDate: string;
-    endDate: string;
-    name?: string;
-  }[];
+  dateRanges: [DateRange, ...DateRange[]];
   metrics: [GA4.Metric["apiName"], ...GA4.Metric["apiName"][]];
   dimensions: [GA4.Dimension["apiName"], ...GA4.Dimension["apiName"][]];
 };

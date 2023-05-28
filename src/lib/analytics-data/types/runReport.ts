@@ -1,15 +1,9 @@
 type RunReportBody = {
-  dimensions: [dimensionBody, ...dimensionBody[]];
-  metrics: [metricBody, ...metricBody[]];
+  dimensions: [DimensionBody, ...DimensionBody[]];
+  metrics: [MetricBody, ...MetricBody[]];
   dateRanges: DateRange[];
-  // TODO: add typed filters
-  dimensionFilter?: {
-    expressions: Filter[];
-  };
-  // TODO: add typed filters
-  metricFilter?: {
-    expressions: Filter[];
-  };
+  dimensionFilter?: MetricOrDimensionFilter<"dimension">;
+  metricFilter?: MetricOrDimensionFilter<"metric">;
   offset?: number;
   limit?: number;
   metricAggregations?: MetricAggregation[];
@@ -20,37 +14,39 @@ type RunReportBody = {
   returnPropertyQuota?: boolean;
 };
 
+type MetricOrDimensionFilter<T extends "metric" | "dimension"> = {
+  andGroup?: AndGroup<T>;
+  orGroup?: OrGroup<T>;
+  notExpression?: NotExpression<T>;
+  filter?: Filter<T>;
+};
+
+type AndGroup<T extends "metric" | "dimension"> = {
+  expressions: MetricOrDimensionFilter<T>[];
+};
+
+type OrGroup<T extends "metric" | "dimension"> = {
+  expressions: MetricOrDimensionFilter<T>[];
+};
+
+type NotExpression<T extends "metric" | "dimension"> =
+  MetricOrDimensionFilter<T>;
+
 type DateRange = { startDate: string; endDate: string; name?: string };
 
-type metricBody = { name: GA4.Metric["apiName"] };
+type MetricBody = { name: GA4.Metric["apiName"] };
 
-type dimensionBody = { name: GA4.Dimension["apiName"] };
+type DimensionBody = { name: GA4.Dimension["apiName"] };
 
-type DimensionFilter = {};
-
-type AndGroup = {};
-
-type OrGroup = {};
-
-type NotExpression = {};
-
-type Filter =
-  | {
-      fieldName: GA4.Dimension["apiName"] | GA4.Metric["apiName"];
-      stringFilter: StringFilter;
-    }
-  | {
-      fieldName: GA4.Dimension["apiName"] | GA4.Metric["apiName"];
-      inListFilter: InListFilter;
-    }
-  | {
-      fieldName: GA4.Dimension["apiName"] | GA4.Metric["apiName"];
-      numericFilter: NumericFilter;
-    }
-  | {
-      fieldName: GA4.Dimension["apiName"] | GA4.Metric["apiName"];
-      betweenFilter: BetweenFilter;
-    };
+type Filter<T extends "metric" | "dimension"> = {
+  betweenFilter?: BetweenFilter;
+  fieldName?: T extends "metric"
+    ? GA4.Metric["apiName"]
+    : GA4.Dimension["apiName"];
+  inListFilter?: InListFilter;
+  numericFilter?: NumericFilter;
+  stringFilter?: StringFilter;
+};
 
 type MatchType =
   | "EXACT"
