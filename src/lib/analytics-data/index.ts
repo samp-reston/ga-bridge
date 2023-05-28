@@ -2,9 +2,10 @@ type ReportOptions = {
   dateRanges: {
     startDate: string;
     endDate: string;
+    name?: string;
   }[];
-  metrics: GA4.Metric["apiName"][];
-  dimensions: GA4.Dimension["apiName"];
+  metrics: [GA4.Metric["apiName"], ...GA4.Metric["apiName"][]];
+  dimensions: [GA4.Dimension["apiName"], ...GA4.Dimension["apiName"][]];
 };
 
 async function runReport(

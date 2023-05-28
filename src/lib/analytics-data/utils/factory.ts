@@ -9,6 +9,6 @@ function generateReportUrl(
 function generateReportQuery(
   propertyId,
   options
-): [ReturnType<typeof generateReportUrl>, reportBody] {
+): [ReturnType<typeof generateReportUrl>, RunReportBody] {
   return [generateReportUrl(propertyId), "hi"];
 }
