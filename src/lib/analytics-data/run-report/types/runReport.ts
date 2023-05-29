@@ -16,7 +16,6 @@ type RunReportRequestBody = {
   returnPropertyQuota?: boolean;
 };
 
-
 type RunReportResponseBody = {
   dimensionHeaders: DimensionHeader[];
   metricHeaders: MetricHeader[];
