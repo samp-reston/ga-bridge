@@ -1,17 +1,33 @@
-type RunReportBody = {
+type RunReportRequestBody = {
   dimensions: [DimensionBody, ...DimensionBody[]];
   metrics: [MetricBody, ...MetricBody[]];
   dateRanges: DateRange[];
+
   dimensionFilter?: MetricOrDimensionFilter<"dimension">;
   metricFilter?: MetricOrDimensionFilter<"metric">;
-  offset?: number;
-  limit?: number;
   metricAggregations?: MetricAggregation[];
   orderBys?: OrderBy[];
-  currencyCode?: CurrencyCode;
   cohortSpec?: CohortSpec;
+
+  offset?: number;
+  limit?: number;
+  currencyCode?: CurrencyCode;
   keepEmptyRows?: boolean;
   returnPropertyQuota?: boolean;
+};
+
+
+type RunReportResponseBody = {
+  dimensionHeaders: DimensionHeader[];
+  metricHeaders: MetricHeader[];
+  rows: Row[];
+  totals: Row[];
+  maximums: Row[];
+  minimums: Row[];
+  rowCount: number;
+  metadata: ResponseMetaData;
+  propertyQuota: PropertyQuota;
+  kind: "analyticsData#runReport";
 };
 
 type MetricOrDimensionFilter<T extends "metric" | "dimension"> = {
@@ -32,7 +48,12 @@ type OrGroup<T extends "metric" | "dimension"> = {
 type NotExpression<T extends "metric" | "dimension"> =
   MetricOrDimensionFilter<T>;
 
-type DateRange = { startDate: string; endDate: string; name?: string };
+type DateRange = { startDate: DateString; endDate: DateString; name?: string };
+type DateString =
+  | `${string}-${string}-${string}`
+  | `${string}daysAgo`
+  | "yesterday"
+  | "today";
 
 type MetricBody = {
   name: GA4.Metric["apiName"];
@@ -225,3 +246,77 @@ type CurrencyCode =
   | "VEF"
   | "VND"
   | "ZAR";
+
+type DimensionHeader = {
+  name: GA4.Dimension["apiName"];
+};
+
+type MetricHeader = {
+  name: GA4.Metric["apiName"];
+  type: MetricType;
+};
+
+type MetricType =
+  | "METRIC_TYPE_UNSPECIFIED"
+  | "TYPE_INTEGER"
+  | "TYPE_FLOAT"
+  | "TYPE_SECONDS"
+  | "TYPE_MILLISECONDS"
+  | "TYPE_MINUTES"
+  | "TYPE_HOURS"
+  | "TYPE_STANDARD"
+  | "TYPE_CURRENCY"
+  | "TYPE_FEET"
+  | "TYPE_MILES"
+  | "TYPE_METERS"
+  | "TYPE_KILOMETERS";
+
+type Row = {
+  dimensionValues: DimensionValue[];
+  metricValues: MetricValue[];
+};
+
+type DimensionValue = {
+  value: string;
+};
+
+type MetricValue = {
+  value: string;
+};
+
+type ResponseMetaData = {
+  dataLossFromOtherRow: boolean;
+  schemaRestrictionResponse: SchemaRestrictionResponse;
+  currencyCode: CurrencyCode;
+  timeZone: string;
+  emptyReason: string;
+  subjectToThresholding: boolean;
+};
+
+type SchemaRestrictionResponse = {
+  activeMetricRestrictions: ActiveMetricRestriction[];
+};
+
+type ActiveMetricRestriction = {
+  restrictedMetricTypes: RestrictedMetricType[];
+  metricName: GA4.Metric["apiName"];
+};
+
+type RestrictedMetricType =
+  | "RESTRICTED_METRIC_TYPE_UNSPECIFIED"
+  | "COST_DATA"
+  | "REVENUE_DATA";
+
+type PropertyQuota = {
+  tokensPerDay: QuotaStatus;
+  tokensPerHour: QuotaStatus;
+  concurrentRequests: QuotaStatus;
+  serverErrorsPerProjectPerHour: QuotaStatus;
+  potentiallyThresholdedRequestsPerHour: QuotaStatus;
+  tokensPerProjectPerHour: QuotaStatus;
+};
+
+type QuotaStatus = {
+  consumed: number;
+  remaining: number;
+};
