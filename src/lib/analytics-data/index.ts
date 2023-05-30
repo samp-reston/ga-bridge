@@ -130,3 +130,19 @@ export class AnalyticsData {
     return null;
   }
 }
+
+type Test<T> = T extends (infer U extends DimensionBody)[]
+  ? {
+      dimensionHeaders: { name: U }[];
+    }
+  : "ping";
+
+const dims: DimensionBody[] = [{ name: "achievementId" }, { name: "adFormat" }];
+
+const dims2 = [
+  "achievementId" as const,
+  "adFormat" as const,
+];
+
+type T0 = Test<typeof dims>;
+type T1 = Test<typeof dims2>;
