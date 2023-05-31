@@ -130,25 +130,3 @@ export class AnalyticsData {
     return null;
   }
 }
-
-type Test<T> = T extends {
-  dimensions: { name: infer D extends DimensionBody["name"] }[];
-  metrics: { name: infer M extends MetricBody["name"] }[];
-}
-  ? {
-      dimensionHeaders: D[];
-      metricHeaders: M[];
-    }
-  : never;
-
-const dims: DimensionBody[] = [{ name: "achievementId" }, { name: "adFormat" }];
-const mets: MetricBody[] = [{ name: "active1DayUsers" }];
-const req = {
-  dimensions: dims,
-  metrics: mets,
-};
-
-const dims2 = ["achievementId" as const, "adFormat" as const];
-
-type T0 = Test<typeof req>;
-type T1 = Test<typeof dims2>;
