@@ -21,7 +21,7 @@ const defaults: Required<AnalyticsDataOptions> = {
   },
 };
 
-export class AnalyticsData {
+export default class AnalyticsData {
   private axios: AxiosInstance;
   public options: AnalyticsDataDefaultOptions;
 
@@ -111,6 +111,18 @@ export class AnalyticsData {
       }
     );
   }
+
+  public async batchRunPivotReports() {}
+
+  public async batchRunReports() {}
+
+  public async checkCompatibility() {}
+
+  public async getMetadata() {}
+
+  public async runPivotReport() {}
+
+  public async runRealtimeReport() {}
 
   /**
    * Retrieve token from chosen storage
