@@ -1,3 +1,5 @@
+import { RunReportRequestBody } from "../types/runReport";
+
 const ANALYTICS_DATA_ENPOINT = process.env.ANALYTICS_DATA_ENPOINT || "";
 
 function generateReportUrl(

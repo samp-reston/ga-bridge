@@ -10,6 +10,10 @@ import {
   AnalyticsDataDefaultOptions,
   AnalyticsDataOptions,
 } from "./types/analyticsData";
+import {
+  RunReportRequestBody,
+  RunReportResponseBody
+} from "./run-report/types/runReport"
 import { isBrowser } from "lib/utils/utils";
 
 const defaults: Required<AnalyticsDataOptions> = {
