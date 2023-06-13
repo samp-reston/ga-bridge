@@ -1,5 +1,5 @@
 {
-  "name": "@samp-reston/ga-bridge",
+  "name": "ga-bridge",
   "version": "1.0.1",
   "description": "A easy-to-use bridge between your GA properties and your code.",
   "main": "dist/index.js",
